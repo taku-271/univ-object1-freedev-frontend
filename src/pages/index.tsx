@@ -24,14 +24,14 @@ export default function Home() {
   return (
       <Box display="flex" justifyContent="center" alignContent="center" gap="3">
         {array.map((element) => 
-          <Box display="flex" flexDirection="column" width="20vh">
+          <Box display="flex" flexDirection="column" width="20vh" key={element.toString}>
             {element.map((e) => 
-              <Button height="15vh" border="1px solid #444" background="white" onClick={() => postSubject(e)} display="flex" flexDirection="column">
+              <Button height="15vh" border="1px solid #444" background="white" onClick={() => postSubject(e)} display="flex" flexDirection="column" key={e}>
                 <Box width="100%" fontSize="80%">{e % 10}</Box>
                 <Box fontSize="80%" height="50%">{
                   subjecsts?.data.map((s) => {
                     if (s.time === e) {
-                      return <Text>{s.name}</Text>
+                      return <Text key={s.id}>{s.name}</Text>
                     }
                   })}
                 </Box>
