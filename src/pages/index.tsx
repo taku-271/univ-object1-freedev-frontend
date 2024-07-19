@@ -29,7 +29,7 @@ export default function Home() {
               <Button height="15vh" border="1px solid #444" background="white" onClick={() => postSubject(e)} display="flex" flexDirection="column" key={e}>
                 <Box width="100%" fontSize="80%">{e % 10}</Box>
                 <Box fontSize="80%" height="50%">{
-                  subjecsts?.data.map((s) => {
+                  subjecsts?.data.map((s: {id: number, name: string, time: number, user_id: number, teacher_id: number}) => {
                     if (s.time === e) {
                       return <Text key={s.id}>{s.name}</Text>
                     }
