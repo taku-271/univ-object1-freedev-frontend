@@ -24,7 +24,7 @@ export default function Home() {
   return (
       <Box display="flex" justifyContent="center" alignContent="center" gap="3">
         {array.map((element) => 
-          <Box display="flex" flexDirection="column" width="20vh" key={element.toString}>
+          <Box display="flex" flexDirection="column" width="20vh" key={element[0]}>
             {element.map((e) => 
               <Button height="15vh" border="1px solid #444" background="white" onClick={() => postSubject(e)} display="flex" flexDirection="column" key={e}>
                 <Box width="100%" fontSize="80%">{e % 10}</Box>
