@@ -1,9 +1,14 @@
-import { Box, Button, Text } from "@yamada-ui/react";
+import { Box, Button, Heading, Input, Text } from "@yamada-ui/react";
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { config } from "dotenv";
+import { SetStateAction, useEffect, useState } from "react";
+
+config();
 
 export default function Home() {
   const [subjecsts, setSubjects] = useState<AxiosResponse>();
+  const [newSubject, setNewSubject] = useState<String>();
+  
   const array = [
     [ 11, 12, 13, 14, 15],
     [ 21, 22, 23, 24, 25],
@@ -13,15 +18,21 @@ export default function Home() {
   ]
 
   const postSubject = async (e: number) => {
-    await axios.post("http://172.19.0.2:8080/api/subject/post", {name: "オブジェクト指向", time: e, user_id: 1, teacher_id: 1})
-    axios.get("http://172.19.0.2:8080/api/subject/").then((subjects) => setSubjects(subjects)).catch(error => console.error(error));
+    await axios.post(`http://ec2-44-221-124-146.compute-1.amazonaws.com:8080/api/subject/post`, {name: newSubject || "オブジェクト指向", time: e, user_id: 1, teacher_id: 1})
+    axios.get(`http://ec2-44-221-124-146.compute-1.amazonaws.com:8080/api/subject/`).then((subjects) => setSubjects(subjects)).catch(error => console.error(error));
   }
   
   useEffect(() => {
-    axios.get("http://172.19.0.2:8080/api/subject/").then((subjects) => setSubjects(subjects)).catch(error => console.error(error));
+    axios.get(`http://ec2-44-221-124-146.compute-1.amazonaws.com:8080/api/subject/`).then((subjects) => setSubjects(subjects)).catch(error => console.error(error));
   },[])
 
+  const onChange = (e: { target: { value: SetStateAction<String | undefined>; }; }) => {
+    setNewSubject(e.target.value);
+    console.log(newSubject);
+  }
+
   return (
+    <>
       <Box display="flex" justifyContent="center" alignContent="center" gap="3">
         {array.map((element) => 
           <Box display="flex" flexDirection="column" width="20vh" key={element[0]}>
@@ -40,5 +51,8 @@ export default function Home() {
           </Box>
         )}
       </Box>
+      <Heading>科目名</Heading>
+      <Input type="text" onChange={onChange}/>
+    </>
   );
 }
